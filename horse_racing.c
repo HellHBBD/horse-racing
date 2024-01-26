@@ -22,12 +22,8 @@ int horse = 5; //horse amount
 int arena_size = 34; //size of the arena
 int frequency = 400; //update frequency (ms)
 
-<<<<<<< HEAD
 void usleep(unsigned);
-=======
-void usleep(unsigned long);
 int getopt(int argc, char *argv[], const char *optstring);
->>>>>>> 0fce54c2abdd9d9fe20fa496bb9acd0b148f53ca
 
 void mssleep(unsigned ms) // wait in ms
 {
@@ -78,8 +74,7 @@ int main(int argc, char **argv)
 			frequency = optarg;
 	}
 
-	int *horse_position = (int *)malloc(sizeof(int) * horse);
-	memset(horse_position, 0, sizeof(int) * horse);
+	int *horse_position = (int *)calloc(horse, sizeof(int));
 	int win = 0;
 
 	srand(time(NULL));
