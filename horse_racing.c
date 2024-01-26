@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <time.h>
 #if defined(__linux__)
@@ -14,11 +15,12 @@
 #define SHOW() printf("\033[?25h") //show cursor
 #define MOVE_DOWN(n) printf("\033[%dB", n) //move cursor down
 #define MOVE_RIGHT(n) printf("\033[%dC", n) //move cursor right
-#define ORANGE() printf("\033[33m")
-#define RESET() printf("\033[0m")
+#define ORANGE() printf("\033[33m") //change cursor color to orange
+#define RESET() printf("\033[0m") //reset cursor color
 
-int horse = 5;
-int arena_size = 34;
+int horse = 5; //horse amount
+int arena_size = 34; //size of the arena
+int frequency = 400; //update frequency (ms)
 
 void usleep(unsigned long);
 
@@ -61,12 +63,14 @@ void print_horse(int num)
 
 int main(int argc, char **argv)
 {
-	if (argc == 3) {
+	if (argc == 4) {
 		horse = atoi(argv[1]);
 		arena_size = atoi(argv[2]);
+		frequency = atoi(argv[3]);
 	}
 	int i = 0, j, tmp;
-	int hourse_pos[6] = {};
+	int *horse_position = (int *)malloc(sizeof(int)*horse);
+	memset(horse_position,0,sizeof(int)*horse);
 	int win = 0;
 
 	srand(time(NULL));
@@ -79,18 +83,18 @@ int main(int argc, char **argv)
 			break;
 
 		for (i = 0; i < horse; i++) {
-			hourse_pos[i] += rand() % 3 + 1;
-			if (hourse_pos[i] > arena_size - 6) {
-				hourse_pos[i] = arena_size - 5;
+			horse_position[i] += rand() % 3 + 1;
+			if (horse_position[i] > arena_size - 6) {
+				horse_position[i] = arena_size - 5;
 				win |= (1 << i);
 			}
 		}
 
 		for (i = 0; i < horse; i++) {
 			SET(5 * i + 2, 0);
-			print_horse(hourse_pos[i]);
+			print_horse(horse_position[i]);
 		}
-		mssleep(400);
+		mssleep(frequency);
 	}
 
 	puts("");
@@ -99,6 +103,6 @@ int main(int argc, char **argv)
 			printf("horse %d is winner\n", i + 1);
 	}
 	SHOW();
-
+	free(horse_position);
 	return 0;
 }
