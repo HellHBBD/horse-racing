@@ -22,8 +22,7 @@ int horse = 5; //horse amount
 int arena_size = 34; //size of the arena
 int frequency = 400; //update frequency (ms)
 
-void usleep(unsigned);
-int getopt(int argc, char *argv[], const char *optstring);
+extern int usleep (unsigned);
 
 void mssleep(unsigned ms) // wait in ms
 {
