@@ -1,1 +1,1 @@
-# horse-racing
+[繁體中文說明](zh-tw.md)

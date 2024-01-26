@@ -22,9 +22,9 @@ int horse = 5; //horse amount
 int arena_size = 34; //size of the arena
 int frequency = 400; //update frequency (ms)
 
-void usleep(unsigned long);
+void usleep(unsigned);
 
-void mssleep(long ms) // wait in ms
+void mssleep(unsigned ms) // wait in ms
 {
 #if defined(__linux__)
 	usleep(ms * 1000);
