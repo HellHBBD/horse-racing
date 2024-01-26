@@ -23,6 +23,7 @@ int arena_size = 34; //size of the arena
 int frequency = 400; //update frequency (ms)
 
 void usleep(unsigned long);
+int getopt(int argc, char *argv[], const char *optstring);
 
 void mssleep(long ms) // wait in ms
 {
@@ -63,14 +64,18 @@ void print_horse(int num)
 
 int main(int argc, char **argv)
 {
-	if (argc == 4) {
-		horse = atoi(argv[1]);
-		arena_size = atoi(argv[2]);
-		frequency = atoi(argv[3]);
+	int optarg;
+	for (int i = 1; i < argc; i++) {
+		if (sscanf(argv[i], "-horse=%d", &optarg))
+			horse = optarg;
+		else if (sscanf(argv[i], "-arena=%d", &optarg))
+			arena_size = optarg;
+		else if (sscanf(argv[i], "-freq=%d", &optarg))
+			frequency = optarg;
 	}
-	int i = 0, j, tmp;
-	int *horse_position = (int *)malloc(sizeof(int)*horse);
-	memset(horse_position,0,sizeof(int)*horse);
+
+	int *horse_position = (int *)malloc(sizeof(int) * horse);
+	memset(horse_position, 0, sizeof(int) * horse);
 	int win = 0;
 
 	srand(time(NULL));
@@ -82,7 +87,7 @@ int main(int argc, char **argv)
 		if (win)
 			break;
 
-		for (i = 0; i < horse; i++) {
+		for (int i = 0; i < horse; i++) {
 			horse_position[i] += rand() % 3 + 1;
 			if (horse_position[i] > arena_size - 6) {
 				horse_position[i] = arena_size - 5;
@@ -90,7 +95,7 @@ int main(int argc, char **argv)
 			}
 		}
 
-		for (i = 0; i < horse; i++) {
+		for (int i = 0; i < horse; i++) {
 			SET(5 * i + 2, 0);
 			print_horse(horse_position[i]);
 		}
