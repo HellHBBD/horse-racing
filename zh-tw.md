@@ -26,8 +26,8 @@ g++ -o horse_racing horse_racing.c
 
 - [-freq=\<update frequency\>]：畫面更新速度(單位：毫秒/次數)
 
-指令範例(順序可互換，也可以不加)：
+指令範例(順序可互換，不加就是使用初始值)：
 
 ```
-horse_racing -horse=3 -arena=45 -freq=200
+horse_racing -horse=5 -arena=34 -freq=400
 ```
